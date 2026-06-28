@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "server1": {
+      "target": "https://taskflowbackend-50mh.onrender.com/api",
+      "description": "This is the Dotnet backend server for Taskflow. It handles all the core functionalities of the application, including user management, task management, and data storage."
+    }
+  }
+}
