@@ -3,6 +3,7 @@ import express from 'express';
 import { getConfig } from './configLoader.js';
 import { gatewayMiddleware } from './gateway.js';
 import { apiKeyAuth } from './apiKeyAuth.js';
+import { rateLimiter } from './rateLimiter.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,8 +13,13 @@ app.get('/health', (_req, res) => {
   res.json({ status: 'ok' });
 });
 
-// Every route below this requires a valid X-API-Key header
-app.use(apiKeyAuth);
+// Rate limiting is applied globally to all routes, including the health check and utility routes. Adjust the rateLimiter configuration in rateLimiter.js as needed.
+app.use(rateLimiter);
+
+// Every route below this requires a valid X-Gateway-Key header
+if( process.env.API_KEY) {
+  app.use(apiKeyAuth);
+}
 
 app.get('/_gateway/servers', (_req, res) => {
   const { servers } = getConfig();

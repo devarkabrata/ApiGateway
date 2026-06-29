@@ -25,7 +25,7 @@ const proxy = createProxyMiddleware({
           status: false,
           error: 'Bad Gateway: Unable to reach the target server.',
           source: 'ApiGateway',
-          details: err.message
+          details: err.message 
         });
       }
     },
